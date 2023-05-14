@@ -13,7 +13,9 @@ const Datatable = () => {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get("http://localhost:1337/api/tours");
+      const response = await axios.get(
+        "http://localhost:1337/api/tours?populate=*"
+      );
       setData(response.data.data);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -30,8 +32,17 @@ const Datatable = () => {
     {
       field: "attributes.Duration",
       headerName: "Duration",
-      width: 150,
+      width: 120,
       valueGetter: (params) => params.row.attributes.Duration,
+    },
+    {
+      field: "attributes.banner",
+      headerName: "Banner",
+      width: 150,
+      headerAlign: "center",
+      renderCell: (params) => {
+        return <img src={params.row.attributes.banner.data.attributes.url} />;
+      },
     },
     {
       field: "attributes.departureDate",
@@ -46,6 +57,7 @@ const Datatable = () => {
       valueGetter: (params) => params.row.attributes.departurePlace,
     },
   ];
+  const getRowHeight = () => 100;
 
   return (
     <div className="datatable" style={{ height: "600px" }}>
@@ -62,6 +74,7 @@ const Datatable = () => {
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
+        getRowHeight={getRowHeight}
       />
     </div>
   );

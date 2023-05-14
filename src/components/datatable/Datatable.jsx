@@ -29,7 +29,6 @@ const Datatable = () => {
   const userColumns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "firstName", headerName: "First Name", width: 130 },
-    // Other columns...
     {
       field: "avatar",
       headerName: "Avatar",
@@ -46,11 +45,18 @@ const Datatable = () => {
       },
     },
     {
-      field: "newField",
-      headerName: "New Field",
+      field: "email",
+      headerName: "Mail",
+      width: 250,
+    },
+    {
+      field: "country",
+      headerName: "Country",
       width: 150,
     },
   ];
+
+  const getRowHeight = () => 100;
 
   const actionColumn = [
     {
@@ -93,6 +99,7 @@ const Datatable = () => {
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
+        getRowHeight={getRowHeight}
       />
     </div>
   );

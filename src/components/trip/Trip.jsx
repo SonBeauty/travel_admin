@@ -13,7 +13,9 @@ const Datatable = () => {
 
   const fetchData = async () => {
     try {
-      const response = await await axios.get("http://localhost:1337/api/trips");
+      const response = await await axios.get(
+        "http://localhost:1337/api/trips?populate=*"
+      );
       setData(response.data.data);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -42,8 +44,29 @@ const Datatable = () => {
     {
       field: "attributes.traverlers",
       headerName: "traveler",
-      width: 150,
+      align: "center",
+      width: 100,
+      headerAlign: "center",
       valueGetter: (params) => params.row.attributes.traverlers,
+    },
+    {
+      field: "attributes.img",
+      headerName: "Banner",
+      width: 150,
+      headerAlign: "center",
+      renderCell: (params) => {
+        return (
+          <div>
+            {params.row.attributes.image.data.map((img) => (
+              <img
+                key={img.attributes.url}
+                src={img.attributes.url}
+                alt="Banner"
+              />
+            ))}
+          </div>
+        );
+      },
     },
     {
       field: "attributes.Date",
